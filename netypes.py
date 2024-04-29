@@ -65,4 +65,24 @@ class TCPSegment:
         try:
             return data.decode('utf-8')
         except Exception as e:
-            print(data)
+            print(data) 
+            
+
+class UDPSegments:
+    length = 8 
+    def __init__(self, data) -> None:
+        unpacked_data= unpack('!HHHH', data[0:self.length])
+        self.src_port = unpacked_data[0] 
+        self.dest_port =unpacked_data[1]
+        self.length= unpacked_data[2]
+        self.checksum= unpacked_data[3]
+        self.leftover_data= data[self.length:]
+        
+    def __str__(self) -> str:
+        return """
+           UDPSegment: 
+           -  Source: {src_port}
+           -  Destination: {dest_port}
+           -  Checksum: {checksum}
+           -  Data: {leftover_data}
+    """.format(**self.__dict__)
