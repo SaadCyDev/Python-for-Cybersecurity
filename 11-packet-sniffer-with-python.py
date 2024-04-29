@@ -1,6 +1,6 @@
 import socket 
 from packet_capture_output import PCAPFile
-from netypes import EthernetFrame, IPHeader, TCPSegment
+from netypes import EthernetFrame, IPHeader, TCPSegment, UDPSegments
 
 
 def main():
@@ -16,8 +16,12 @@ def main():
           if ipheader.protocol==6:
              tcp= TCPSegment(ipheader.leftover_data)
             #  print(tcp.__dict__)
-             if tcp.src_port==80:
-                print(tcp)
+            #  if tcp.src_port==80:
+               #  print(tcp)
+                  # print()
+          elif ipheader.protocol==17:
+             udp= UDPSegments(ipheader.leftover_data)
+             print(udp)
       #  break 
     #    print(raw_data)
     #    print(addr)
